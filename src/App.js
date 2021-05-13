@@ -45,6 +45,7 @@ class App extends Component {
       currentPage,
     };
     this.setState({ isLoading: true, error: false });
+
     imagesApi
       .fetchImages(options)
       .then(newImagesArray => {
@@ -82,8 +83,9 @@ class App extends Component {
   openModal = event => {
     const { imagesArray } = this.state;
     const currentId = Number(event.target.getAttribute("id"));
-    const modalImageURL = imagesArray.find(image => image.id === currentId)
-      .largeImageURL;
+    const modalImageURL = imagesArray.find(
+      image => image.id === currentId,
+    ).largeImageURL;
     this.setState({
       showModal: true,
       largeImageURL: modalImageURL,

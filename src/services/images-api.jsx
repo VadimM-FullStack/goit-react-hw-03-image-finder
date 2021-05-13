@@ -20,10 +20,15 @@ class ImagesApi extends Component {
   };
 
   fetchImages = async ({ searchQuery, currentPage }) => {
-    const { data } = await axios.get("", {
-      params: { searchQuery, currentPage },
-    });
-    return data.hits;
+    try {
+      const { data } = await axios.get("", {
+        params: { q: searchQuery, page: currentPage },
+      });
+      return data.hits;
+    } catch (error) {
+      console.log("error", { error });
+      return [];
+    }
   };
 }
 
