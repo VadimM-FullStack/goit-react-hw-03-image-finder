@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ImagesApi from "./services/images-api";
+import { getImages } from "./services/images-api";
 import Searchbar from "./components/Searchbar";
 import ImageGallery from "./components/ImageGallery";
 import Button from "./components/Button";
@@ -8,7 +8,6 @@ import Modal from "./components/Modal";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import styles from "./index.module.css";
 
-const imagesApi = new ImagesApi();
 class App extends Component {
   state = {
     showModal: false,
@@ -46,8 +45,7 @@ class App extends Component {
     };
     this.setState({ isLoading: true, error: false });
 
-    imagesApi
-      .fetchImages(options)
+    getImages(options)
       .then(newImagesArray => {
         this.setState(prevState => ({
           imagesArray: [...prevState.imagesArray, ...newImagesArray],

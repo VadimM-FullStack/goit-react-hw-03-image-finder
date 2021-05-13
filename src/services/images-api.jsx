@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Component } from "react";
 import PropTypes from "prop-types";
 
 const BASE_URL = "https://pixabay.com/api/";
@@ -13,23 +12,21 @@ axios.defaults.params = {
   per_page: 12,
 };
 
-class ImagesApi extends Component {
-  static propTypes = {
-    searchQuery: PropTypes.string.isRequired,
-    currentPage: PropTypes.number.isRequired,
-  };
+const getImages = async ({ searchQuery, currentPage }) => {
+  try {
+    const { data } = await axios.get("", {
+      params: { q: searchQuery, page: currentPage },
+    });
+    return data.hits;
+  } catch (error) {
+    console.log("error", { error });
+    return [];
+  }
+};
 
-  fetchImages = async ({ searchQuery, currentPage }) => {
-    try {
-      const { data } = await axios.get("", {
-        params: { q: searchQuery, page: currentPage },
-      });
-      return data.hits;
-    } catch (error) {
-      console.log("error", { error });
-      return [];
-    }
-  };
-}
+getImages.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+  currentPage: PropTypes.number.isRequired,
+};
 
-export default ImagesApi;
+export { getImages };
